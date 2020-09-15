@@ -41,16 +41,23 @@ namespace Design_Pattern_C_Sharp
 
         public static void AbrirSingleton()
         {
-            //TODO: Implementar
+            Console.Clear();
+
+            Singleton instanciaUm = Singleton.Instancia;
+            Singleton instanciaDois = Singleton.Instancia;
+
+            MostrarRespostaRetorno($"Classes Singleton são iguais? {instanciaUm.Equals(instanciaDois)}");
+            //SAIDA: True
         }
 
         public static void MostrarRespostaRetorno(string mensagem)
         {
             Console.Clear();
             Console.WriteLine(mensagem);
+            Console.WriteLine();
             Console.WriteLine("Aperte Qualquer tecla pra voltar");
-            Console.Clear();
             Console.ReadKey();
+            Console.Clear();
             Menu();
         }
     }
