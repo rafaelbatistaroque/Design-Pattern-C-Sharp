@@ -1,7 +1,7 @@
-﻿using Design_Pattern_C_Sharp.SingletonPattern;
+﻿using Design_Pattern_C_Sharp.FactoryPattern;
+using Design_Pattern_C_Sharp.SingletonPattern;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Design_Pattern_C_Sharp
 {
@@ -15,9 +15,9 @@ namespace Design_Pattern_C_Sharp
         {
             Console.Clear();
 
-            Console.WriteLine("+----------------------------------+");
-            Console.WriteLine("| 1-SINGLETON |--------------------+");
-            Console.WriteLine("+----------------------------------+");
+            Console.WriteLine("+----------------------------------------------+");
+            Console.WriteLine("| 1-SINGLETON | 2-FACTORY |--------------------|");
+            Console.WriteLine("+----------------------------------------------+");
 
             Console.WriteLine();
 
@@ -31,6 +31,7 @@ namespace Design_Pattern_C_Sharp
             var opcao = new Dictionary<string, Action>()
             {
                 {"1",  AbrirSingleton},
+                {"2",  SubMenuFactory}
             };
 
             if (opcao.ContainsKey(opcaoSelecionada))
@@ -48,6 +49,38 @@ namespace Design_Pattern_C_Sharp
 
             MostrarRespostaRetorno($"Classes Singleton são iguais? {instanciaUm.Equals(instanciaDois)}");
             //SAIDA: True
+        }
+
+        public static void AbrirFactory(ETipoAplicacao opcaoTipoAplicacao)
+        {
+            var resultadoDesenvolvimento = new DesenvolvimentoAplicacaoFactory()
+                                               .IniciarDesenvolvimento(opcaoTipoAplicacao);
+
+            MostrarRespostaRetorno(resultadoDesenvolvimento.RealizarDesenvolvimento());
+
+            //SAIDA: Desenvolvido Aplicação Web | Desktop | Mobile
+        }
+
+        public static void SubMenuFactory()
+        {
+            Console.Clear();
+
+            Console.WriteLine("+------------------------------+");
+            Console.WriteLine("| 1-MOBILE | 2-WEB | 3-DESKTOP |");
+            Console.WriteLine("+------------------------------+");
+
+            Console.WriteLine();
+
+            var opcaoSelecionada = int.Parse(Console.ReadLine()) - 1;
+            var ehTipoAplicacao = Enum.IsDefined(typeof(ETipoAplicacao), opcaoSelecionada);
+
+            if (ehTipoAplicacao)
+            {
+                var opcaoTipoAplicacao = Enum.Parse<ETipoAplicacao>(opcaoSelecionada.ToString());
+                AbrirFactory(opcaoTipoAplicacao);
+            }
+            else
+                MostrarRespostaRetorno("Seleção inválida.");
         }
 
         public static void MostrarRespostaRetorno(string mensagem)
